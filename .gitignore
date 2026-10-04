@@ -1,0 +1,14 @@
+# some data files 
+*.bin 
+
+# python
+
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# other
+.ipynb_checkpoints/
+.DS_Store
