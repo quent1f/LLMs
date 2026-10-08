@@ -1,5 +1,7 @@
 # some data files 
 *.bin 
+*.csv
+/cours1/data/text8
 
 # python
 
