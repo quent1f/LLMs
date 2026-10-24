@@ -1,0 +1,87 @@
+{
+  "experiment_id": 43,
+  "task": "qqp",
+  "k": 4,
+  "trainable_parameters": 56704514,
+  "total_parameters": 116536322,
+  "trainable_fraction": 0.48658232066050616,
+  "metric": "f1",
+  "score": 0.8577036310107949,
+  "majority_score": 0.0,
+  "accuracy": 0.8924066287410339,
+  "f1": 0.8577036310107949,
+  "mcc": 0.771983656033611,
+  "train_loss": 1.3194208409898236,
+  "classification_loss": 0.12045846078631205,
+  "lm_loss": 2.3979247598185762,
+  "lm_active": true,
+  "optimizer_steps": 34113,
+  "seconds": 5766.103454305965,
+  "n_train": 363846,
+  "n_eval": 40430,
+  "device": "NVIDIA A100-SXM4-40GB",
+  "data_config": {
+    "model_id": "openai-community/openai-gpt",
+    "seed": 42,
+    "max_length": 128,
+    "max_train_size": null,
+    "max_eval_size": null
+  },
+  "train_config": {
+    "epochs": 3,
+    "batch_size": 32,
+    "learning_rate": 6.25e-05,
+    "weight_decay": 0.01,
+    "optimizer": "AdamW",
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "decay_bias_and_norm": false,
+    "max_grad_norm": 1.0,
+    "schedule": "openai_warmup_linear",
+    "warmup_ratio": 0.002,
+    "classifier_dropout": 0.1,
+    "classifier_init_std": 0.02,
+    "lm_weight": 0.5
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.7257224782238745,
+      "classification_loss": 0.3431203818453986,
+      "lm_loss": 2.7652041937464147,
+      "learning_rate": 4.166666666666667e-05,
+      "accuracy": 0.8739302498144942,
+      "f1": 0.834087432049738,
+      "mcc": 0.7335006126746155
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.4703536636101773,
+      "classification_loss": 0.21986949845221196,
+      "lm_loss": 2.500968330117711,
+      "learning_rate": 2.0833333333333336e-05,
+      "accuracy": 0.8879792233489983,
+      "f1": 0.8538230642610464,
+      "mcc": 0.7647841894939592
+    },
+    {
+      "epoch": 3,
+      "train_loss": 1.3194208409898236,
+      "classification_loss": 0.12045846078631205,
+      "lm_loss": 2.3979247598185762,
+      "learning_rate": 0.0,
+      "accuracy": 0.8924066287410339,
+      "f1": 0.8577036310107949,
+      "mcc": 0.771983656033611
+    }
+  ],
+  "versions": {
+    "torch": "2.7.1+cu126",
+    "transformers": "4.57.1",
+    "datasets": "4.3.0",
+    "numpy": "2.4.6"
+  }
+}

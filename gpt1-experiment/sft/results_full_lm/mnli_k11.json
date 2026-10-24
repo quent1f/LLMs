@@ -1,0 +1,81 @@
+{
+  "experiment_id": 89,
+  "task": "mnli",
+  "k": 11,
+  "trainable_parameters": 7090179,
+  "total_parameters": 116537091,
+  "trainable_fraction": 0.060840535310770716,
+  "metric": "accuracy",
+  "score": 0.7131940906775344,
+  "majority_score": 0.3273560876209883,
+  "accuracy": 0.7131940906775344,
+  "f1": "",
+  "mcc": "",
+  "train_loss": 2.368435898686641,
+  "classification_loss": 0.6543948740344905,
+  "lm_loss": 3.4280820494154045,
+  "lm_active": true,
+  "optimizer_steps": 36816,
+  "seconds": 3635.465204306005,
+  "n_train": 392702,
+  "n_eval": 9815,
+  "device": "NVIDIA A100-SXM4-40GB",
+  "data_config": {
+    "model_id": "openai-community/openai-gpt",
+    "seed": 42,
+    "max_length": 128,
+    "max_train_size": null,
+    "max_eval_size": null
+  },
+  "train_config": {
+    "epochs": 3,
+    "batch_size": 32,
+    "learning_rate": 6.25e-05,
+    "weight_decay": 0.01,
+    "optimizer": "AdamW",
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "decay_bias_and_norm": false,
+    "max_grad_norm": 1.0,
+    "schedule": "openai_warmup_linear",
+    "warmup_ratio": 0.002,
+    "classifier_dropout": 0.1,
+    "classifier_init_std": 0.02,
+    "lm_weight": 0.5
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 2.6077737632101035,
+      "classification_loss": 0.7960787062900837,
+      "lm_loss": 3.6233901120244374,
+      "learning_rate": 4.166666666666667e-05,
+      "accuracy": 0.6884360672440143
+    },
+    {
+      "epoch": 2,
+      "train_loss": 2.4354991468743163,
+      "classification_loss": 0.6974753550677234,
+      "lm_loss": 3.4760475844303738,
+      "learning_rate": 2.0833333333333336e-05,
+      "accuracy": 0.7030056036678554
+    },
+    {
+      "epoch": 3,
+      "train_loss": 2.368435898686641,
+      "classification_loss": 0.6543948740344905,
+      "lm_loss": 3.4280820494154045,
+      "learning_rate": 0.0,
+      "accuracy": 0.7131940906775344
+    }
+  ],
+  "versions": {
+    "torch": "2.7.1+cu126",
+    "transformers": "4.57.1",
+    "datasets": "4.3.0",
+    "numpy": "2.4.6"
+  }
+}

@@ -36,24 +36,24 @@ Il se trouve que lors de la phase de fine-tuning supervisé pour une tâche pré
 L'étape de fine-tuning est en réalité un modèle très simple : il s'agit d'une simple couche linéaire à laquelle on ajoute un $softmax$. 
 Attention : contrairement à LoRA, ici on ne gèle pas les paramètres du modèle pré-entrainé; les auteurs fine-tunent l'entièreté du transformer + couche linéaire. Cela ne montre pas encore la capacité générale du transformer à créer des représentations ultra efficientes pour des tâches très diverses. 
 
-3) Les tâches sur lesquels on teste sont très différentes 
+3) Les tâches sur lesquelles on teste sont très différentes 
 
 - Natural langage inference : implication, contradiction entre deux phrases 
 - Réponse à des questions / raisonnement basique : choisir une réponse à partir de texte disponible
 - similarité sémantique 
 - classification de texte
 
-De plus, contrairement aux modèles précédents, les auteurs souligne que l'architecture n'est pas modifiée entre les différentes tâches : modulo quelques adaptations des données en entrée, elle peuvent être traitées par le modèle pré-entrainé. C'est un gros gain de flexibilité et d'adaptabilité
+De plus, contrairement aux modèles précédents, les auteurs soulignent que l'architecture n'est pas modifiée entre les différentes tâches : modulo quelques adaptations des données en entrée, elle peuvent être traitées par le modèle pré-entrainé. C'est un gros gain de flexibilité et d'adaptabilité !
 
 4) Des résultats probants sur les transformers et le pre-training
 
 Les auteurs obtiennent des résultats SOTA sur quasiment toutes les tâches de traitement de langage naturel (9/12 datasets évalués), à la fois sur des petits et des grands datasets. 
-Intéressant à noter : le gain sur STS-B (petit dataset) est assez énorme par rapport à d'autres modèles (+10%  par rapport à Multi-Task BiLSTM) alors que sur le dataset plus large SNLI, le gain est un peu plus marginal. Cela permet-il d'appuyer l'effet du pré-entrainement ? 
+Intéressant à noter : le gain sur STS-B (petit dataset) est assez énorme en comparaison à d'autres modèles (+10%  par rapport à Multi-Task BiLSTM) alors que sur le dataset plus large SNLI, le gain est un peu plus marginal. Cela permet-il d'appuyer l'effet du pré-entrainement ? 
 La partie ablation argumente justement en ce sens : le même benchmark avec la même architecture mais sans pré-entrainement fait baisser assez drastiquement l'accuracy sur toutes les tâches (notamment STS-B ou le dataset est petit). De plus, l'architecture Transformer est justifiée puisqu'elle surperforme un LSTM sur toutes les tâches, à l'exception de MRPC. 
 
 5) Des débuts d'idées de "scaling laws" et d'interprétabilité
 
-Dans la partie <u>Analysis</u>, les auteurs ont des considérations sur les lois d'échelles qui arriveront plus tard notamment en 2022 avec [chinchilla scaling laws](https://arxiv.org/pdf/2203.15556). Ils remarquent que l'accuracy d'une tâche augment avec nombre de blocs d'attention dans le transformer. Cela veut dire que même sans entrainement sur le dataset, le modèle parvient à contextualiser des idées au fil des blocs d'attention. 
+Dans la partie <u>Analysis</u>, les auteurs ont des considérations sur les lois d'échelles qui arriveront plus tard notamment en 2022 avec [chinchilla scaling laws](https://arxiv.org/pdf/2203.15556). Ils remarquent que l'accuracy d'une tâche augmente avec nombre de blocs d'attention dans le transformer. Cela veut dire que même sans entrainement sur le dataset, le modèle parvient à contextualiser des idées au fil des blocs d'attention. 
 
 Pour savoir si le modèle pré-entrainé apprend des vrais concepts linguistiques comme la notion de phrase "positive" ou "négative", les auteurs ont fait des expériences en ajoutant le token "very" après la phrase qu'ils veulent tester et regardent la distribution de probabilité du prochain token entre "positif" et "négatif". Pareil pour RACE, ils proposent différentes réponses au LLM et regardent celle qui a la plus grande likelihood. 
 

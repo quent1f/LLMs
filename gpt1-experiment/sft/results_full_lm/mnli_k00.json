@@ -1,0 +1,81 @@
+{
+  "experiment_id": 78,
+  "task": "mnli",
+  "k": 0,
+  "trainable_parameters": 116537091,
+  "total_parameters": 116537091,
+  "trainable_fraction": 1.0,
+  "metric": "accuracy",
+  "score": 0.8141619969434539,
+  "majority_score": 0.3273560876209883,
+  "accuracy": 0.8141619969434539,
+  "f1": "",
+  "mcc": "",
+  "train_loss": 1.708346580127138,
+  "classification_loss": 0.21671385613159744,
+  "lm_loss": 2.9832654485998744,
+  "lm_active": true,
+  "optimizer_steps": 36816,
+  "seconds": 8036.813790465007,
+  "n_train": 392702,
+  "n_eval": 9815,
+  "device": "NVIDIA A100-SXM4-40GB",
+  "data_config": {
+    "model_id": "openai-community/openai-gpt",
+    "seed": 42,
+    "max_length": 128,
+    "max_train_size": null,
+    "max_eval_size": null
+  },
+  "train_config": {
+    "epochs": 3,
+    "batch_size": 32,
+    "learning_rate": 6.25e-05,
+    "weight_decay": 0.01,
+    "optimizer": "AdamW",
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "decay_bias_and_norm": false,
+    "max_grad_norm": 1.0,
+    "schedule": "openai_warmup_linear",
+    "warmup_ratio": 0.002,
+    "classifier_dropout": 0.1,
+    "classifier_init_std": 0.02,
+    "lm_weight": 0.5
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 2.311405577814229,
+      "classification_loss": 0.5987857724830572,
+      "lm_loss": 3.4252396111453103,
+      "learning_rate": 4.166666666666667e-05,
+      "accuracy": 0.8012226184411615
+    },
+    {
+      "epoch": 2,
+      "train_loss": 1.9489648584648016,
+      "classification_loss": 0.3836691180694469,
+      "lm_loss": 3.130591479724297,
+      "learning_rate": 2.0833333333333336e-05,
+      "accuracy": 0.8139582272032603
+    },
+    {
+      "epoch": 3,
+      "train_loss": 1.708346580127138,
+      "classification_loss": 0.21671385613159744,
+      "lm_loss": 2.9832654485998744,
+      "learning_rate": 0.0,
+      "accuracy": 0.8141619969434539
+    }
+  ],
+  "versions": {
+    "torch": "2.7.1+cu126",
+    "transformers": "4.57.1",
+    "datasets": "4.3.0",
+    "numpy": "2.4.6"
+  }
+}
