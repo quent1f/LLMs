@@ -65,14 +65,38 @@ On fait écho au point 2) : à quel point le modèle pré-entrainé génère des
 
 Arriver à obtenir des résultats corrects sur des benchmarks variés où l'on fine-tune moins de paramètres montrerait vraiment l'utilité du pre-training et sa capacité à créer des représentations du langage. 
 
+![Score vs number of transformer blocks fine-tuned](img/fine_tuning.png)
+
+On a fine-tuné sur sept tâches sur les datasets complets en suivant le protocole du papier initial :
+ - trois époques 
+ - batchsize 32 
+ - $\lambda = 0.5$
+ 
+ L'abscisse représente le nombre de blocs entraînés, à $k=0$ on entraîne seulement une couche linéaire alors qu'à $k=12$ on fine tune tout le transformer GPT-1. 
+La concavité des courbes suggère que l'adaptation est de moins en moins rentable : entraîner le dernier bloc apporte déjà un gain important sur QQP, QNLI et MNLI, puis chaque bloc supplémentaire améliore plus progressivement les résultats. Une partie du calcul effectué par les blocs préentraînés peut donc être réutilisée sans modification tout en gardant une performance plus que raisonnable. 
+
+Le besoin d'adaptation dépend cependant de la tâche. Sur SST-2, la tête seule obtient déjà 83,5 % d'accuracy, contre 92,3 % pour le modèle complet : le sentiment est en partie accessible dans la représentation préentraînée, mais le fine-tuning conserve un gain substantiel. Sur CoLA, le MCC de la tête seule est pratiquement nul, puis atteint environ 0,47 avec six blocs entraînés. RTE continue également à bénéficier d'une adaptation plus profonde ; sa tête seule reste sous la baseline majoritaire, d'environ 52,7 % d'accuracy.
+
+Attention : sur des petits datasets, il y a surement des effets d'overfitting. Plus on fine-tune de blocs d'attentions, plus on a de paramètres à entraîner (jusqu'à 116 millions pour le modèle complet). Cela peut aussi expliquer pourquoi on atteint des plateaux assez rapides. 
+
 2) Sur l'interprétabilité 
 
 Pour mieux comprendre la contextualisation des embeddings à l'aide du mécanisme d'attention, on peut essayer d'étudier couche par couche la capacité du modèle à détecter des concepts de langage (typiquement le positif/négatif). Pour cela, on peut faire comme dans l'article avec des méthodes basées sur la log-likelihood ou la distribution de probabilité du prochain token; mais on peut aussi regarder des outils comme le "linear probing". On fait une forward pass dans le modèle pré-entrainé d'une phrase positive ou négative. A chaque layer $l$, on récupère un vecteur $h^{(l)}$ : soit le dernier token, soit par mean-pooling. On réalise une regression logistique à chaque couche (avec la même séparation train/test) pour classifier si la phrase est positive ou négative, puis on observe l'accuracy de celle ci au fil des couches. 
-Si cette dernière augmente avec $l$, alors le transformer comprend (ou du moins est capable de séparer linéairement) le concept. 
+Si cette dernière augmente avec $l$, cela indique que la propriété étudiée devient plus facilement accessible au classifieur linéaire dans la représentation choisie.
+
+![Linear probing using last token along each embedding layer](img/gpt1_probes_last_token.png)
+
+![Linear probing using mean-pooling along each embedding layer](img/gpt1_probes_mean_pooling.png)
+
+Pour mean-pooling, on observe qu'une très légère augmentation de l'accuracy au fil des couches. Cela veut dire que l'embedding des mots sans attention suffit déjà à séparer ssez correctement les tâches proposées. Cela est assez surprenant et décevant. 
+
+En revanche, pour last-token, on a une grosse augmentation entre l'embedding de base et ceux contextualisés : c'est assez logique, à la couche 0, on a seulement accès à l'embedding du dernier token qui ne contient pas d'information pour la tâche à classifier. Au fil des blocs, l'attention fait son travail et contextualise la phrase : on observe une augmentation de l'accuracy jusqu'à obtenir des performances similaires à mean-pooling
+Avec le dernier token, SST-2 progresse surtout à partir des couches 7 à 10, et TREC atteint environ 90 % dans les couches supérieures.
 
 3) Sur l'hyper-paramètre $\lambda$
 
 Faire une ablation sur $\lambda$ : à quel point ajouter le $LM$ (language modeling) objective est il pertinent ? Les auteurs présentent leur résultats avec $\lambda = 0.5$ et $\lambda = 0$, mais ne discutent pas des accuracy et convergence pour une grille de $\lambda > 0$. 
 
-Pour voir la réalisation (simplifiée et rapide) des 2 premières expériences ainsi que les remarques et conclusions, voir le [repo git](https://github.com/quent1f/LLMs/blob/main/gpt1-experiment)
+
+
 
